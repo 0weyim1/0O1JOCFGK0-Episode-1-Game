@@ -191,3 +191,54 @@ h1 {
 @keyframes mergeBounce { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 .tile-new { animation: popIn 0.2s ease-out forwards; }
 .tile-merged { animation: mergeBounce 0.15s ease-in-out forwards; }
+/* --- SCREEN ROTATION / LANDSCAPE FIX --- */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    html, body {
+        align-items: center;
+        padding: 5px;
+    }
+
+    .game-container {
+        max-width: 550px; /* Give it horizontal breathing room */
+        display: grid;
+        grid-template-columns: 160px 1fr; /* Put header on the left, game square on the right! */
+        gap: 15px;
+        align-items: center;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    .scores-wrapper {
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+    }
+
+    .score-container, .high-score-container {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 4px;
+    }
+
+    .control-panel {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .grid {
+        max-width: 280px; /* Restrict size so it fits perfectly on short landscape screens */
+        margin: 0 auto;
+    }
+    
+    .tile {
+        font-size: 9px; /* Make text slightly smaller so it packs down neatly sideways */
+    }
+}
