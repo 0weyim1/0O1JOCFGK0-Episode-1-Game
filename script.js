@@ -204,6 +204,11 @@ document.addEventListener('touchend', (e) => {
     handleSwipe();
 }, { passive: true });
 
+// Prevent the screen from scrolling/bouncing when touching the game grid
+gridDisplay.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
+
 function handleSwipe() {
     let xDiff = touchEndX - touchStartX;
     let yDiff = touchEndY - touchStartY;
