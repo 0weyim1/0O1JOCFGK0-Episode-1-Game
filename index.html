@@ -2,48 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2048 - Text Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2048 Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="game-container">
-        <div class="heading-row">
-            <h1 class="title">LOVE</h1>
-            <div class="scores-container">
-                <div class="score-box">
-                    <div class="score-title">SCORE</div>
-                    <div id="score">0</div>
-                </div>
-                <div class="score-box">
-                    <div class="score-title">BEST</div>
-                    <div id="high-score">0</div>
-                </div>
+        <div class="header">
+            <div class="title-area">
+                <h1>2048</h1>
+                <button id="gear-btn" class="icon-btn" onclick="toggleMenu()">⚙️</button>
+            </div>
+            <div class="right-header">
+                <button id="new-game-btn" onclick="resetGame()">New Game</button>
             </div>
         </div>
 
-        <div class="intro-row">
-            <p class="game-intro">0O1JOCFGK0: Episode 1 (Article 25.1.2-Article 25.1.3). Join the tiles containing the same meaning of texts until you get your LOVE! The texts are from
-            <a href="https://0weyim1.github.io/0-Or-1-Journal-of-Cards/0O1JOCFGK0.html">0 Or 1 Journal of Cards for General Knowledge 0 (0O1JOCFGK0)</a>, <a href="https://0weyim1.github.io/0-Or-1-Journal-of-Cards/vol1.html">Article 25.1.2-Article 25.1.3</a></p>
-            <button class="restart-button" onclick="resetGame()">New Game</button>
+        <div id="grid" class="grid"></div>
+
+        <div id="game-over" class="hidden">
+            <p>Game Over!</p>
+            <button onclick="resetGame()">Try Again</button>
         </div>
 
-        <div class="grid-container">
-            <div id="grid" class="grid"></div>
-            <div id="game-over" class="hidden">
-                <p>Game Over!</p>
-                <button onclick="resetGame()">Try Again</button>
+        <div id="menu-overlay" class="overlay hidden">
+            <div class="menu-content">
+                <h2>How to Play</h2>
+                <p>Swipe or use arrow keys to move the tiles. When two tiles with the same sentence match, they merge into one!</p>
+                <p>Join the phrases to reach the final <strong>2048</strong> milestone to win!</p>
+                <button class="close-btn" onclick="toggleMenu()">Back to Game</button>
             </div>
         </div>
-
-        <p class="game-explanation">
-            <strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> or <strong>swipe on mobile screens</strong> to move the tiles. When two tiles containing matching text touch, they <strong>merge into one!</strong>
-        </p>
-        <hr class="divider">
-        <p class="game-footer">
-            Crafted with passion. An upgraded dynamic twist on the open-source puzzle sensation created originally by Gabriele Cirulli.
-        </p>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
