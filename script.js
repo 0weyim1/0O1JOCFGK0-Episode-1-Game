@@ -11,6 +11,12 @@ let highScore = 0;
 let newTileCoords = null;
 let mergedTileCoords = [];
 
+// Touch Tracking coordinates configuration variables
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
 const tileTextMap = {
     2: ["A fresh start.", "Just the beginning.", "First steps."],
     4: ["To be or not to be.", "Double trouble!", "Moving right along."],
@@ -99,9 +105,7 @@ function slideRow(row, rowIndex, isVertical, isReversed, colIndex) {
             score += arr[i];
             scoreDisplay.innerHTML = score;
             
-            if (arr[i] === 2048) {
-                triggerVictory();
-            }
+            if (arr[i] === 2048) triggerVictory();
             
             if (score > highScore) {
                 highScore = score;
@@ -115,32 +119,20 @@ function slideRow(row, rowIndex, isVertical, isReversed, colIndex) {
     }
     
     let compressed = arr.filter(val => val);
-    
     for (let i = 0; i < compressed.length; i++) {
         if (localMerged[i]) {
             let finalIdx = isReversed ? (3 - i) : i;
-            if (isVertical) {
-                mergedTileCoords.push({ r: finalIdx, c: colIndex });
-            } else {
-                mergedTileCoords.push({ r: rowIndex, c: finalIdx });
-            }
+            if (isVertical) mergedTileCoords.push({ r: finalIdx, c: colIndex });
+            else mergedTileCoords.push({ r: rowIndex, c: finalIdx });
         }
     }
 
-    while (compressed.length < 4) {
-        compressed.push(0);
-    }
+    while (compressed.length < 4) compressed.push(0);
     return compressed;
 }
 
-function moveLeft() {
-    for (let r = 0; r < 4; r++) board[r] = slideRow(board[r], r, false, false);
-}
-
-function moveRight() {
-    for (let r = 0; r < 4; r++) board[r] = slideRow(board[r].reverse(), r, false, true).reverse();
-}
-
+function moveLeft() { for (let r = 0; r < 4; r++) board[r] = slideRow(board[r], r, false, false); }
+function moveRight() { for (let r = 0; r < 4; r++) board[r] = slideRow(board[r].reverse(), r, false, true).reverse(); }
 function moveUp() {
     for (let c = 0; c < 4; c++) {
         let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
@@ -148,7 +140,6 @@ function moveUp() {
         for (let r = 0; r < 4; r++) board[r][c] = row[r];
     }
 }
-
 function moveDown() {
     for (let c = 0; c < 4; c++) {
         let row = [board[0][c], board[1][c], board[2][c], board[3][c]].reverse();
@@ -157,17 +148,16 @@ function moveDown() {
     }
 }
 
-document.addEventListener('keyup', (e) => {
-    // Block moves if the settings panel is currently open
-    if (!menuOverlay.classList.contains('hidden')) return;
-
+// Global Move Execution Engine
+function executeMove(direction) {
+    if (!menuOverlay.classList.contains('hidden')) return; // Ignore inputs if settings menu is open
+    
     let boardStringBefore = JSON.stringify(board);
 
-    if (e.key === 'ArrowLeft') moveLeft();
-    else if (e.key === 'ArrowRight') moveRight();
-    else if (e.key === 'ArrowUp') moveUp();
-    else if (e.key === 'ArrowDown') moveDown();
-    else return;
+    if (direction === 'left') moveLeft();
+    else if (direction === 'right') moveRight();
+    else if (direction === 'up') moveUp();
+    else if (direction === 'down') moveDown();
 
     let boardStringAfter = JSON.stringify(board);
 
@@ -176,7 +166,48 @@ document.addEventListener('keyup', (e) => {
         updateDisplay();
         checkGameOver();
     }
+}
+
+// Keyboard input setup
+document.addEventListener('keyup', (e) => {
+    if (e.key === 'ArrowLeft') executeMove('left');
+    else if (e.key === 'ArrowRight') executeMove('right');
+    else if (e.key === 'ArrowUp') executeMove('up');
+    else if (e.key === 'ArrowDown') executeMove('down');
 });
+
+// --- NEW MOBILE SWIPE EVENT HANDLERS ---
+gridDisplay.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+gridDisplay.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+    let diffX = touchEndX - touchStartX;
+    let diffY = touchEndY - touchStartY;
+    
+    // Minimum distance threshold in pixels to register a swipe intent
+    const threshold = 30; 
+
+    // Determine if the user swiped mostly horizontally or vertically
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (Math.abs(diffX) > threshold) {
+            if (diffX > 0) executeMove('right');
+            else executeMove('left');
+        }
+    } else {
+        if (Math.abs(diffY) > threshold) {
+            if (diffY > 0) executeMove('down');
+            else executeMove('up');
+        }
+    }
+}
 
 function checkGameOver() {
     for (let r = 0; r < 4; r++) {
@@ -194,15 +225,10 @@ function triggerVictory() {
     gameOverDisplay.classList.remove('hidden');
 }
 
-function toggleMenu() {
-    menuOverlay.classList.toggle('hidden');
-}
+function toggleMenu() { menuOverlay.classList.toggle('hidden'); }
+function resetGame() { createBoard(); }
 
-function resetGame() {
-    createBoard();
-}
-
-// Global mobile background dragging preventions
+// Global background mobile dragging locking prevention
 document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
