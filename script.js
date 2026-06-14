@@ -2,6 +2,7 @@ const gridDisplay = document.getElementById('grid');
 const scoreDisplay = document.getElementById('score');
 const highScoreDisplay = document.getElementById('high-score');
 const gameOverDisplay = document.getElementById('game-over');
+const menuOverlay = document.getElementById('menu-overlay');
 
 let board = [];
 let score = 0;
@@ -10,29 +11,28 @@ let highScore = 0;
 let newTileCoords = null;
 let mergedTileCoords = [];
 
-// --- CUSTOM PHRASES DICTIONARY ---
 const tileTextMap = {
-    2: ["God","Jesus","እግዚአብሔር","Holy sprit","Allah","Yahweh","Deity","Almighty","Eternal"],
-    4: ["Respect","Revere","Reverence","Venerate","Esteem","Deify","Deference","Favor","Regard"],
-    8: ["Beautiful","Aesthetic","Gorgeous","ቆንጆ", "Stunning","Cute","Marvelous","Pretty"],
-    16:["Speed","The magnitude of Velocity","ፍጥነት","ከወወ","Swiftness","Haste","Hurry","Fleetness","Hie"],
-         32:   ["5 - 3÷2(3 - 2)×3 + 1", "1.5",  "ላእላዩ 3 እና ታህታዩ 2 የሆነ ቁጥር", "3/2", "1 1/2"],
-    64: ["Extraneous","Irrelevant","Unrelated","Unconnected","Inapplicable","Peripheral","Immaterial"],
-    128: ["Provocative","Annoying","Irritating","Goading","Vexing","Galling","Exasperating"],
-   256:["Brusque","Curt","Abrupt","Blunt","Short","Sharp","Terse","Brisk","Crisp","Clipped","Monosyllabic","Indelicate","Tactless","Offhand","Snappish","Peremptory"],
-    512: ["Momentum","(mass)x(velocity)","The force required to bring the object to a stop in a unit length of time"],
-    1024: ["a/b + c/d",  "(ad + bc) / bd, b != 0 and d != 0"],
-    2048: ["LOVE"]
+    2: ["A fresh start.", "Just the beginning.", "First steps."],
+    4: ["To be or not to be.", "Double trouble!", "Moving right along."],
+    8: ["All that glitters is not gold.", "An octave of strength.", "Getting serious now."],
+    16: ["Actions speak louder than words.", "Sweet sixteen!", "Look at you go!"],
+    32: ["Knowledge is power.", "Halfway there!", "Keep pushing forward."],
+    64: ["The plot thickens...", "Unstoppable force!", "Brilliant moves."],
+    128: ["Reaching for the stars.", "Centurion status!", "Amazing focus."],
+    256: ["A true masterclass.", "Quarter way to glory!", "Phenomenal."],
+    512: ["The half-millennial mark.", "Incredible technique!", "Pure legend status."],
+    1024: ["So close to perfection!", "One step from greatness.", "The final countdown."],
+    2048: ["The ultimate phrase achieved!", "Victory is yours!", "You conquered 2048!"]
 };
 
 function createBoard() {
     board = Array(4).fill(null).map(() => Array(4).fill(0));
     score = 0;
-    document.getElementById('score').innerHTML = score;
+    scoreDisplay.innerHTML = score;
     
-    // Reset the text back to default Game Over just in case they won the last round
     gameOverDisplay.querySelector('p').innerHTML = "Game Over!";
     gameOverDisplay.classList.add('hidden');
+    menuOverlay.classList.add('hidden');
     
     highScore = localStorage.getItem('2048-highscore') ? parseInt(localStorage.getItem('2048-highscore')) : 0;
     highScoreDisplay.innerHTML = highScore;
@@ -42,6 +42,7 @@ function createBoard() {
     generateTile();
     updateDisplay();
 }
+
 function generateTile() {
     let emptyCells = [];
     for (let r = 0; r < 4; r++) {
@@ -57,9 +58,7 @@ function generateTile() {
 }
 
 function updateDisplay() {
-    if (!gridDisplay) return;
     gridDisplay.innerHTML = '';
-    
     for (let r = 0; r < 4; r++) {
         for (let c = 0; c < 4; c++) {
             let tile = document.createElement('div');
@@ -76,11 +75,6 @@ function updateDisplay() {
                 }
                 
                 tile.setAttribute('data-value', value);
-
-                // Safe Pastel Color Logic
-                let colorSeed = (r * 45 + c * 75 + value * 11) % 360;
-                tile.style.backgroundColor = `hsl(${colorSeed}, 75%, 75%)`;
-                tile.style.color = '#4f4943';
                 
                 if (newTileCoords && newTileCoords.r === r && newTileCoords.c === c) {
                     tile.classList.add('tile-new');
@@ -99,27 +93,26 @@ function slideRow(row, rowIndex, isVertical, isReversed, colIndex) {
     let arr = row.filter(val => val);
     let localMerged = Array(4).fill(false);
 
-for (let i = 0; i < arr.length - 1; i++) {
-    if (arr[i] === arr[i + 1]) {
-        arr[i] *= 2; // This is where 1024 becomes 2048!
-        score += arr[i];
-        document.getElementById('score').innerHTML = score;
-        
-        if (arr[i] === 2048) {
-            triggerVictory();
+    for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i] === arr[i + 1]) {
+            arr[i] *= 2;
+            score += arr[i];
+            scoreDisplay.innerHTML = score;
+            
+            if (arr[i] === 2048) {
+                triggerVictory();
+            }
+            
+            if (score > highScore) {
+                highScore = score;
+                highScoreDisplay.innerHTML = highScore;
+                localStorage.setItem('2048-highscore', highScore);
+            }
+            
+            arr[i + 1] = 0;
+            localMerged[i] = true;
         }
-        // ----------------------------------------
-
-        if (score > highScore) {
-            highScore = score;
-            highScoreDisplay.innerHTML = highScore;
-            localStorage.setItem('2048-highscore', highScore);
-        }
-        
-        arr[i + 1] = 0;
-        localMerged[i] = true;
     }
-}
     
     let compressed = arr.filter(val => val);
     
@@ -141,15 +134,11 @@ for (let i = 0; i < arr.length - 1; i++) {
 }
 
 function moveLeft() {
-    for (let r = 0; r < 4; r++) {
-        board[r] = slideRow(board[r], r, false, false);
-    }
+    for (let r = 0; r < 4; r++) board[r] = slideRow(board[r], r, false, false);
 }
 
 function moveRight() {
-    for (let r = 0; r < 4; r++) {
-        board[r] = slideRow(board[r].reverse(), r, false, true).reverse();
-    }
+    for (let r = 0; r < 4; r++) board[r] = slideRow(board[r].reverse(), r, false, true).reverse();
 }
 
 function moveUp() {
@@ -168,8 +157,10 @@ function moveDown() {
     }
 }
 
-// Keyboard Input Engine
 document.addEventListener('keyup', (e) => {
+    // Block moves if the settings panel is currently open
+    if (!menuOverlay.classList.contains('hidden')) return;
+
     let boardStringBefore = JSON.stringify(board);
 
     if (e.key === 'ArrowLeft') moveLeft();
@@ -187,56 +178,6 @@ document.addEventListener('keyup', (e) => {
     }
 });
 
-// Mobile Swipe Engine
-let touchStartX = 0;
-let touchStartY = 0;
-let touchEndX = 0;
-let touchEndY = 0;
-
-document.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-    touchStartY = e.changedTouches[0].screenY;
-}, { passive: true });
-
-document.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    touchEndY = e.changedTouches[0].screenY;
-    handleSwipe();
-}, { passive: true });
-
-// Prevent the screen from scrolling/bouncing when touching the game grid
-gridDisplay.addEventListener('touchmove', function(e) {
-    e.preventDefault();
-}, { passive: false });
-
-function handleSwipe() {
-    let xDiff = touchEndX - touchStartX;
-    let yDiff = touchEndY - touchStartY;
-    const threshold = 40; 
-    
-    let boardStringBefore = JSON.stringify(board);
-
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-        if (Math.abs(xDiff) > threshold) {
-            if (xDiff > 0) moveRight();
-            else moveLeft();
-        } else return;
-    } else {
-        if (Math.abs(yDiff) > threshold) {
-            if (yDiff > 0) moveDown();
-            else moveUp();
-        } else return;
-    }
-
-    let boardStringAfter = JSON.stringify(board);
-
-    if (boardStringBefore !== boardStringAfter) {
-        generateTile();
-        updateDisplay();
-        checkGameOver();
-    }
-}
-
 function checkGameOver() {
     for (let r = 0; r < 4; r++) {
         for (let c = 0; c < 4; c++) {
@@ -245,32 +186,25 @@ function checkGameOver() {
             if (r < 3 && board[r][c] === board[r + 1][c]) return;
         }
     }
-    if (gameOverDisplay) gameOverDisplay.classList.remove('hidden');
+    gameOverDisplay.classList.remove('hidden');
+}
+
+function triggerVictory() {
+    gameOverDisplay.querySelector('p').innerHTML = "You Win! 🎉";
+    gameOverDisplay.classList.remove('hidden');
+}
+
+function toggleMenu() {
+    menuOverlay.classList.toggle('hidden');
 }
 
 function resetGame() {
     createBoard();
 }
 
-// Start Game
-createBoard();
-function triggerVictory() {
-    // Change the text inside the Game Over screen to celebrate the win
-    gameOverDisplay.querySelector('p').innerHTML = "You Win! 🎉";
-    // Show the overlay screen immediately
-    gameOverDisplay.classList.remove('hidden');
-}
-// Global lock against any screen pulling/elastic bouncing on mobile
+// Global mobile background dragging preventions
 document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
-function toggleMenu() {
-    const menuOverlay = document.getElementById('menu-overlay');
-    
-    // Toggle the 'hidden' utility class
-    if (menuOverlay.classList.contains('hidden')) {
-        menuOverlay.classList.remove('hidden');
-    } else {
-        menuOverlay.classList.add('hidden');
-    }
-}
+
+createBoard();
