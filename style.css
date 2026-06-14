@@ -14,6 +14,16 @@ body {
     overflow: hidden; /* Hard block against webpage scrolling */
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100svh;
+    overflow: hidden; /* Strict block against vertical scrolling */
+    position: fixed;  /* Prevents mobile Safari/Chrome from dragging the viewport */
+    touch-action: none; /* Disables all default browser panning and zooming behaviors */
+}
+
 .game-container {
     width: 100%;
     /* FIX: Limits the game size so it fits beautifully on small screens 
