@@ -18,17 +18,17 @@ let touchEndX = 0;
 let touchEndY = 0;
 
 const tileTextMap = {
-    2: ["A fresh start.", "Just the beginning.", "First steps."],
-    4: ["To be or not to be.", "Double trouble!", "Moving right along."],
-    8: ["All that glitters is not gold.", "An octave of strength.", "Getting serious now."],
-    16: ["Actions speak louder than words.", "Sweet sixteen!", "Look at you go!"],
-    32: ["Knowledge is power.", "Halfway there!", "Keep pushing forward."],
-    64: ["The plot thickens...", "Unstoppable force!", "Brilliant moves."],
-    128: ["Reaching for the stars.", "Centurion status!", "Amazing focus."],
-    256: ["A true masterclass.", "Quarter way to glory!", "Phenomenal."],
-    512: ["The half-millennial mark.", "Incredible technique!", "Pure legend status."],
-    1024: ["So close to perfection!", "One step from greatness.", "The final countdown."],
-    2048: ["The ultimate phrase achieved!", "Victory is yours!", "You conquered 2048!"]
+    2: ["God","Jesus","እግዚአብሔር","Holy sprit","Allah","Yahweh","Deity","Almighty","Eternal"],
+    4: ["Respect","Revere","Reverence","Venerate","Esteem","Deify","Deference","Favor","Regard"],
+    8: ["Beautiful","Aesthetic","Gorgeous","ቆንጆ", "Stunning","Cute","Marvelous","Pretty"],
+    16:["Speed","The magnitude of Velocity","ፍጥነት","ከወወ","Swiftness","Haste","Hurry","Fleetness","Hie"],
+         32:   ["5 - 3÷2(3 - 2)×3 + 1", "1.5",  "ላእላዩ 3 እና ታህታዩ 2 የሆነ ቁጥር", "3/2", "1 1/2"],
+    64: ["Extraneous","Irrelevant","Unrelated","Unconnected","Inapplicable","Peripheral","Immaterial"],
+    128: ["Provocative","Annoying","Irritating","Goading","Vexing","Galling","Exasperating"],
+   256:["Brusque","Curt","Abrupt","Blunt","Short","Sharp","Terse","Brisk","Crisp","Clipped","Monosyllabic","Indelicate","Tactless","Offhand","Snappish","Peremptory"],
+    512: ["Momentum","(mass)x(velocity)","The force required to bring the object to a stop in a unit length of time"],
+    1024: ["a/b + c/d",  "(ad + bc) / bd, b != 0 and d != 0"],
+    2048: ["LOVE"]
 };
 
 function createBoard() {
