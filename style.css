@@ -113,6 +113,7 @@ h1 {
 
 /* Tile Square Frameworks */
 .tile {
+    background: rgba(238, 228, 218, 0.35);
     border-radius: 4px;
     display: flex;
     justify-content: center;
