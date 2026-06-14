@@ -260,3 +260,7 @@ function triggerVictory() {
     // Show the overlay screen immediately
     gameOverDisplay.classList.remove('hidden');
 }
+// Global lock against any screen pulling/elastic bouncing on mobile
+document.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+}, { passive: false });
