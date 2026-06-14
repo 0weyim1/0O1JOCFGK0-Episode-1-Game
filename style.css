@@ -4,21 +4,45 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    
+    /* FIX: svh stands for "Small Viewport Height". It calculates the height 
+       EXCLUDING mobile URL bars, ensuring the game never overflows the screen. */
+    height: 100svh; 
     margin: 0;
-    padding: 20px 0;
+    padding: 10px;
     box-sizing: border-box;
+    overflow: hidden; /* Hard block against webpage scrolling */
 }
 
 .game-container {
-    width: 400px;
+    width: 100%;
+    /* FIX: Limits the game size so it fits beautifully on small screens 
+       while leaving vertical room for the header and margins. */
+    max-width: 380px; 
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-/* Header Grid Row Styling */
-.heading-row {
+.grid {
+    background: #bbada0;
+    width: 100%; 
+    aspect-ratio: 1 / 1; /* Keeps it a perfect square */
+    border-radius: 6px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 8px; /* Slightly tighter gaps for mobile space */
+    padding: 8px;
+    box-sizing: border-box;
+    position: relative;
+}
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20px; /* Increase this number to push the grid DOWN */
 }
 
 .title {
