@@ -95,22 +95,20 @@ h1 {
     cursor: pointer;
 }
 
-/* FIX: This grid system enforces perfect square sizes for rows/columns 
-   even if the text inside them tries to push them open! */
+/* FIXED: Restores background color and grid gaps */
 .grid {
     background: #bbada0;
     width: 100%;
     border-radius: 6px;
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
-    grid-auto-rows: 1fr !important; /* Forces all rows to equal 1 fraction of width */
     gap: 10px;
     padding: 10px;
     box-sizing: border-box;
     position: relative;
 }
 
-/* FIX: Establishes a strict square constraint for every individual tile container */
+/* FIXED: Keeps tiles perfectly square while allowing the background grid to show */
 .tile {
     border-radius: 4px;
     display: flex;
@@ -123,11 +121,25 @@ h1 {
     color: #776e65;
     line-height: 1.2;
     word-break: break-word;
-    font-size: 12px; /* Uniform legible mobile font size */
-    aspect-ratio: 1 / 1; /* Forces the item to be a square */
-    overflow: hidden; /* Prevents long sentences from exploding the grid layout */
+    font-size: 11px; 
+    width: 100%;
+    aspect-ratio: 1 / 1 !important; /* Enforces absolute square shapes */
+    overflow: hidden; 
     transition: background-color 0.15s ease, color 0.15s ease;
 }
+
+/* Dynamic Colors: Removed conflicts so colors apply dynamically */
+.tile[data-value="2"] { background-color: #eee4da !important; color: #776e65 !important; }
+.tile[data-value="4"] { background-color: #ede0c8 !important; color: #776e65 !important; }
+.tile[data-value="8"] { background-color: #f2b179 !important; color: #f9f6f2 !important; }
+.tile[data-value="16"] { background-color: #f59563 !important; color: #f9f6f2 !important; }
+.tile[data-value="32"] { background-color: #f67c5f !important; color: #f9f6f2 !important; }
+.tile[data-value="64"] { background-color: #f65e3b !important; color: #f9f6f2 !important; }
+.tile[data-value="128"] { background-color: #edcf72 !important; color: #f9f6f2 !important; }
+.tile[data-value="256"] { background-color: #edcc61 !important; color: #f9f6f2 !important; }
+.tile[data-value="512"] { background-color: #edc850 !important; color: #f9f6f2 !important; }
+.tile[data-value="1024"] { background-color: #edc53f !important; color: #f9f6f2 !important; }
+.tile[data-value="2048"] { background-color: #edc22e !important; color: #f9f6f2 !important; }
 
 .overlay {
     position: absolute;
