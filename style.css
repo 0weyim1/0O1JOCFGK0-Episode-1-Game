@@ -164,18 +164,6 @@ h1 {
 
 .hidden { display: none !important; }
 
-/* Precise Application of Background Tile Colors via Data Attributes */
-.tile[data-value="2"] { background-color: #eee4da !important; color: #776e65 !important; }
-.tile[data-value="4"] { background-color: #ede0c8 !important; color: #776e65 !important; }
-.tile[data-value="8"] { background-color: #f2b179 !important; color: #f9f6f2 !important; }
-.tile[data-value="16"] { background-color: #f59563 !important; color: #f9f6f2 !important; }
-.tile[data-value="32"] { background-color: #f67c5f !important; color: #f9f6f2 !important; }
-.tile[data-value="64"] { background-color: #f65e3b !important; color: #f9f6f2 !important; }
-.tile[data-value="128"] { background-color: #edcf72 !important; color: #f9f6f2 !important; }
-.tile[data-value="256"] { background-color: #edcc61 !important; color: #f9f6f2 !important; }
-.tile[data-value="512"] { background-color: #edc850 !important; color: #f9f6f2 !important; }
-.tile[data-value="1024"] { background-color: #edc53f !important; color: #f9f6f2 !important; }
-.tile[data-value="2048"] { background-color: #edc22e !important; color: #f9f6f2 !important; }
 
 /* Subtle Animation Keyframes */
 @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
