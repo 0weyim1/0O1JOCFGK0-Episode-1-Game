@@ -71,16 +71,19 @@ function updateDisplay() {
             tile.classList.add('tile');
             let value = board[r][c];
             
-            if (value > 0) {
-                let options = tileTextMap[value];
-                if (options && Array.isArray(options)) {
-                    let index = (r * 7 + c * 13 + value) % options.length;
-                    tile.innerHTML = options[index];
-                } else {
-                    tile.innerHTML = value;
-                }
-                
-                tile.setAttribute('data-value', value);
+           // Make sure this block inside your updateDisplay() function matches perfectly:
+if (value > 0) {
+    let options = tileTextMap[value];
+    if (options && Array.isArray(options)) {
+        let index = (r * 7 + c * 13 + value) % options.length;
+        tile.innerHTML = options[index];
+    } else {
+        tile.innerHTML = value;
+    }
+    
+    // CRITICAL: This assigns the raw number string (2, 4, 8) so CSS can read it
+    tile.setAttribute('data-value', value.toString()); 
+}
                 
                 if (newTileCoords && newTileCoords.r === r && newTileCoords.c === c) {
                     tile.classList.add('tile-new');
