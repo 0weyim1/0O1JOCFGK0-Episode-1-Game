@@ -264,3 +264,13 @@ function triggerVictory() {
 document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
+function toggleMenu() {
+    const menuOverlay = document.getElementById('menu-overlay');
+    
+    // Toggle the 'hidden' utility class
+    if (menuOverlay.classList.contains('hidden')) {
+        menuOverlay.classList.remove('hidden');
+    } else {
+        menuOverlay.classList.add('hidden');
+    }
+}
