@@ -3,7 +3,7 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    height: -webkit-fill-available; /* FIX: Tells Safari to strictly respect the visible screen boundary */
+    height: -webkit-fill-available; /* Locks visible area strictly for iOS Safari */
     background-color: #faf8ef;
     font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
     display: flex;
@@ -12,7 +12,7 @@ html, body {
     overflow: hidden !important; 
     position: fixed;  
     top: 0; left: 0; right: 0; bottom: 0;
-    touch-action: none; 
+    touch-action: none; /* Disables double-tap zoom and native browser scrolling gestures */
 }
 
 .game-container {
@@ -26,6 +26,7 @@ html, body {
     gap: 10px;
 }
 
+/* Header UI Layout */
 .header {
     display: flex;
     justify-content: space-between;
@@ -97,7 +98,7 @@ h1 {
     cursor: pointer;
 }
 
-/* FIXED: Restores background color and grid gaps */
+/* Perfect Grid Sizing & Alignment Construction */
 .grid {
     background: #bbada0;
     width: 100%;
@@ -110,7 +111,7 @@ h1 {
     position: relative;
 }
 
-/* FIXED: Keeps tiles perfectly square while allowing the background grid to show */
+/* Tile Square Frameworks */
 .tile {
     border-radius: 4px;
     display: flex;
@@ -125,24 +126,12 @@ h1 {
     word-break: break-word;
     font-size: 11px; 
     width: 100%;
-    aspect-ratio: 1 / 1 !important; /* Enforces absolute square shapes */
+    aspect-ratio: 1 / 1 !important; /* Locks width and height to matching square dimensions */
     overflow: hidden; 
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-/* Dynamic Colors: Removed conflicts so colors apply dynamically */
-.tile[data-value="2"] { background-color: #eee4da !important; color: #776e65 !important; }
-.tile[data-value="4"] { background-color: #ede0c8 !important; color: #776e65 !important; }
-.tile[data-value="8"] { background-color: #f2b179 !important; color: #f9f6f2 !important; }
-.tile[data-value="16"] { background-color: #f59563 !important; color: #f9f6f2 !important; }
-.tile[data-value="32"] { background-color: #f67c5f !important; color: #f9f6f2 !important; }
-.tile[data-value="64"] { background-color: #f65e3b !important; color: #f9f6f2 !important; }
-.tile[data-value="128"] { background-color: #edcf72 !important; color: #f9f6f2 !important; }
-.tile[data-value="256"] { background-color: #edcc61 !important; color: #f9f6f2 !important; }
-.tile[data-value="512"] { background-color: #edc850 !important; color: #f9f6f2 !important; }
-.tile[data-value="1024"] { background-color: #edc53f !important; color: #f9f6f2 !important; }
-.tile[data-value="2048"] { background-color: #edc22e !important; color: #f9f6f2 !important; }
-
+/* Modals & Menus Overlays */
 .overlay {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -174,24 +163,26 @@ h1 {
 
 .hidden { display: none !important; }
 
-/* Dynamic Background Colors linked directly to data-value attributes */
-.tile[data-value="2"] { background: #eee4da !important; }
-.tile[data-value="4"] { background: #ede0c8 !important; }
-.tile[data-value="8"] { background: #f2b179 !important; color: #f9f6f2; }
-.tile[data-value="16"] { background: #f59563 !important; color: #f9f6f2; }
-.tile[data-value="32"] { background: #f67c5f !important; color: #f9f6f2; }
-.tile[data-value="64"] { background: #f65e3b !important; color: #f9f6f2; }
-.tile[data-value="128"] { background: #edcf72 !important; color: #f9f6f2; }
-.tile[data-value="256"] { background: #edcc61 !important; color: #f9f6f2; }
-.tile[data-value="512"] { background: #edc850 !important; color: #f9f6f2; }
-.tile[data-value="1024"] { background: #edc53f !important; color: #f9f6f2; }
-.tile[data-value="2048"] { background: #edc22e !important; color: #f9f6f2; }
+/* Precise Application of Background Tile Colors via Data Attributes */
+.tile[data-value="2"] { background-color: #eee4da !important; color: #776e65 !important; }
+.tile[data-value="4"] { background-color: #ede0c8 !important; color: #776e65 !important; }
+.tile[data-value="8"] { background-color: #f2b179 !important; color: #f9f6f2 !important; }
+.tile[data-value="16"] { background-color: #f59563 !important; color: #f9f6f2 !important; }
+.tile[data-value="32"] { background-color: #f67c5f !important; color: #f9f6f2 !important; }
+.tile[data-value="64"] { background-color: #f65e3b !important; color: #f9f6f2 !important; }
+.tile[data-value="128"] { background-color: #edcf72 !important; color: #f9f6f2 !important; }
+.tile[data-value="256"] { background-color: #edcc61 !important; color: #f9f6f2 !important; }
+.tile[data-value="512"] { background-color: #edc850 !important; color: #f9f6f2 !important; }
+.tile[data-value="1024"] { background-color: #edc53f !important; color: #f9f6f2 !important; }
+.tile[data-value="2048"] { background-color: #edc22e !important; color: #f9f6f2 !important; }
 
+/* Subtle Animation Keyframes */
 @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
 @keyframes mergeBounce { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 .tile-new { animation: popIn 0.2s ease-out forwards; }
 .tile-merged { animation: mergeBounce 0.15s ease-in-out forwards; }
-/* --- SCREEN ROTATION / LANDSCAPE FIX --- */
+
+/* --- NATIVE MOBILE SCREEN ROTATION (LANDSCAPE OPTIMIZATION) --- */
 @media screen and (orientation: landscape) and (max-height: 500px) {
     html, body {
         align-items: center;
@@ -199,9 +190,9 @@ h1 {
     }
 
     .game-container {
-        max-width: 550px; /* Give it horizontal breathing room */
+        max-width: 560px; 
         display: grid;
-        grid-template-columns: 160px 1fr; /* Put header on the left, game square on the right! */
+        grid-template-columns: 170px 1fr; /* Shifts instructions/scores left and board right */
         gap: 15px;
         align-items: center;
     }
@@ -209,17 +200,15 @@ h1 {
     .header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 8px;
     }
 
-    h1 {
-        font-size: 32px;
-    }
+    h1 { font-size: 30px; }
 
     .scores-wrapper {
         flex-direction: column;
         width: 100%;
-        gap: 5px;
+        gap: 4px;
     }
 
     .score-container, .high-score-container {
@@ -231,14 +220,15 @@ h1 {
     .control-panel {
         justify-content: flex-start;
         width: 100%;
+        margin: 0;
     }
 
     .grid {
-        max-width: 280px; /* Restrict size so it fits perfectly on short landscape screens */
+        max-width: 290px; 
         margin: 0 auto;
     }
     
     .tile {
-        font-size: 9px; /* Make text slightly smaller so it packs down neatly sideways */
+        font-size: 9px; /* Scales sentence structure down cleanly for landscape boxes */
     }
 }
