@@ -22,12 +22,12 @@ const tileTextMap = {
     4: ["Respect","Revere","Reverence","Venerate","Esteem","Deify","Deference","Favor","Regard"],
     8: ["Beautiful","Aesthetic","Gorgeous","ቆንጆ", "Stunning","Cute","Marvelous","Pretty"],
     16:["Speed","The magnitude of Velocity","ፍጥነት","ከወወ","Swiftness","Haste","Hurry","Fleetness","Hie"],
-         32:   ["5 - 3÷2(3 - 2)×3 + 1", "1.5",  "ላእላዩ 3 እና ታህታዩ 2 የሆነ ቁጥር", "3/2", "1 1/2"],
-    64: ["Extraneous","Irrelevant","Unrelated","Unconnected","Inapplicable","Peripheral","Immaterial"],
-    128: ["Provocative","Annoying","Irritating","Goading","Vexing","Galling","Exasperating"],
-   256:["Brusque","Curt","Abrupt","Blunt","Short","Sharp","Terse","Brisk","Crisp","Clipped","Monosyllabic","Indelicate","Tactless","Offhand","Snappish","Peremptory"],
-    512: ["Momentum","(mass)x(velocity)","The force required to bring the object to a stop in a unit length of time"],
-    1024: ["a/b + c/d",  "(ad + bc) / bd, b != 0 and d != 0"],
+    32: ["5 - 3÷2(3 - 2)×3 + 1", "1.5",  "ላእላዩ 3 እና ታህታዩ 2 የሆነ ቁጥር", "3/2", "1 1/2"],
+    64: ["Tense","Time","Period","ጊዜ"],
+    128: ["Slope","Gradient","Incline","Steepness"],
+   256:["Oscillation","Vibration","fluctuation","Wave"],
+    512: ["Extinction","Disappearance","Eradication","Elimination"],
+    1024: ["Solid","Firm","Rigid"],
     2048: ["LOVE"]
 };
 
