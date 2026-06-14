@@ -82,6 +82,10 @@ function updateDisplay() {
                 
                 // CRITICAL FIX: Converts the dynamic variable to string so CSS selectors match values perfectly
                 tile.setAttribute('data-value', value.toString());
+                 // Safe Pastel Color Logic
+                let colorSeed = (r * 45 + c * 75 + value * 11) % 360;
+                tile.style.backgroundColor = `hsl(${colorSeed}, 75%, 75%)`;
+                tile.style.color = '#4f4943';
                 
                 if (newTileCoords && newTileCoords.r === r && newTileCoords.c === c) {
                     tile.classList.add('tile-new');
