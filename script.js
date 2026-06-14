@@ -11,7 +11,7 @@ let highScore = 0;
 let newTileCoords = null;
 let mergedTileCoords = [];
 
-// Touch Tracking coordinates configuration variables
+// Screen Swipe Gesture Variables
 let touchStartX = 0;
 let touchStartY = 0;
 let touchEndX = 0;
@@ -71,19 +71,17 @@ function updateDisplay() {
             tile.classList.add('tile');
             let value = board[r][c];
             
-           // Make sure this block inside your updateDisplay() function matches perfectly:
-if (value > 0) {
-    let options = tileTextMap[value];
-    if (options && Array.isArray(options)) {
-        let index = (r * 7 + c * 13 + value) % options.length;
-        tile.innerHTML = options[index];
-    } else {
-        tile.innerHTML = value;
-    }
-    
-    // CRITICAL: This assigns the raw number string (2, 4, 8) so CSS can read it
-    tile.setAttribute('data-value', value.toString()); 
-}
+            if (value > 0) {
+                let options = tileTextMap[value];
+                if (options && Array.isArray(options)) {
+                    let index = (r * 7 + c * 13 + value) % options.length;
+                    tile.innerHTML = options[index];
+                } else {
+                    tile.innerHTML = value;
+                }
+                
+                // CRITICAL FIX: Converts the dynamic variable to string so CSS selectors match values perfectly
+                tile.setAttribute('data-value', value.toString());
                 
                 if (newTileCoords && newTileCoords.r === r && newTileCoords.c === c) {
                     tile.classList.add('tile-new');
@@ -108,6 +106,7 @@ function slideRow(row, rowIndex, isVertical, isReversed, colIndex) {
             score += arr[i];
             scoreDisplay.innerHTML = score;
             
+            // Core Win Rule Check
             if (arr[i] === 2048) triggerVictory();
             
             if (score > highScore) {
@@ -151,9 +150,10 @@ function moveDown() {
     }
 }
 
-// Global Move Execution Engine
+// Master Move Router
 function executeMove(direction) {
-    if (!menuOverlay.classList.contains('hidden')) return; // Ignore inputs if settings menu is open
+    // If menu overlay instructions are open, freeze and ignore all gesture inputs
+    if (!menuOverlay.classList.contains('hidden')) return; 
     
     let boardStringBefore = JSON.stringify(board);
 
@@ -171,7 +171,7 @@ function executeMove(direction) {
     }
 }
 
-// Keyboard input setup
+// Keyboard input links
 document.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowLeft') executeMove('left');
     else if (e.key === 'ArrowRight') executeMove('right');
@@ -179,7 +179,7 @@ document.addEventListener('keyup', (e) => {
     else if (e.key === 'ArrowDown') executeMove('down');
 });
 
-// --- NEW MOBILE SWIPE EVENT HANDLERS ---
+// --- NATIVE MOBILE TOUCH SWIPE CAPTURES ---
 gridDisplay.addEventListener('touchstart', function(e) {
     touchStartX = e.changedTouches[0].screenX;
     touchStartY = e.changedTouches[0].screenY;
@@ -194,11 +194,8 @@ gridDisplay.addEventListener('touchend', function(e) {
 function handleSwipe() {
     let diffX = touchEndX - touchStartX;
     let diffY = touchEndY - touchStartY;
-    
-    // Minimum distance threshold in pixels to register a swipe intent
-    const threshold = 30; 
+    const threshold = 30; // Minimum sliding sweep distance in pixels to count as a deliberate move
 
-    // Determine if the user swiped mostly horizontally or vertically
     if (Math.abs(diffX) > Math.abs(diffY)) {
         if (Math.abs(diffX) > threshold) {
             if (diffX > 0) executeMove('right');
@@ -231,7 +228,7 @@ function triggerVictory() {
 function toggleMenu() { menuOverlay.classList.toggle('hidden'); }
 function resetGame() { createBoard(); }
 
-// Global background mobile dragging locking prevention
+// Global strict block preventing Safari and Chrome from elastic scrolling/dragging the background
 document.addEventListener('touchmove', function(e) {
     e.preventDefault();
 }, { passive: false });
