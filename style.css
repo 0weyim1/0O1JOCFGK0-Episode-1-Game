@@ -224,3 +224,87 @@ html, body {
     color: #9e948a;
     margin: 0;
 }
+/* Header Layout Modifications */
+.title-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.right-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+/* Minimalist Gear Button style */
+.icon-btn {
+    background: transparent;
+    font-size: 28px;
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease;
+}
+.icon-btn:hover {
+    transform: rotate(45deg);
+}
+
+/* New Game Action Button */
+#new-game-btn {
+    background: #8f7a66;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Pop-up Overlay Box for Menu/Instructions */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(250, 248, 239, 0.95); /* Matches body background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    border-radius: 6px;
+}
+
+.menu-content {
+    text-align: center;
+    padding: 20px;
+    color: #776e65;
+    max-width: 90%;
+}
+
+.menu-content h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.menu-content p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.close-btn {
+    background: #8f7a66;
+    color: white;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none !important;
+}
