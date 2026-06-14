@@ -13,9 +13,20 @@
                 <h1>2048</h1>
                 <button id="gear-btn" class="icon-btn" onclick="toggleMenu()">⚙️</button>
             </div>
-            <div class="right-header">
-                <button id="new-game-btn" onclick="resetGame()">New Game</button>
+            <div class="scores-wrapper">
+                <div class="score-container">
+                    <span class="score-label">Score</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="high-score-container">
+                    <span class="score-label">Best</span>
+                    <span id="high-score">0</span>
+                </div>
             </div>
+        </div>
+
+        <div class="control-panel">
+            <button id="new-game-btn" onclick="resetGame()">New Game</button>
         </div>
 
         <div id="grid" class="grid"></div>
@@ -28,8 +39,9 @@
         <div id="menu-overlay" class="overlay hidden">
             <div class="menu-content">
                 <h2>How to Play</h2>
-                <p>Swipe or use arrow keys to move the tiles. When two tiles with the same sentence match, they merge into one!</p>
-                <p>Join the phrases to reach the final <strong>2048</strong> milestone to win!</p>
+                <p>Swipe or use your arrow keys to shift the sentence tiles.</p>
+                <p>When two matching tiles collide, they combine to progress the story phrase!</p>
+                <p>Strategize your steps to reach the final <strong>2048</strong> tile to win!</p>
                 <button class="close-btn" onclick="toggleMenu()">Back to Game</button>
             </div>
         </div>
